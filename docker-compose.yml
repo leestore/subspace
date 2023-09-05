@@ -21,7 +21,7 @@ services:
         "--rpc-methods", "unsafe",
         "--rpc-external",
         "--validator",
-        "--name", "kanrublev"
+        "--name", "leestore"
       ]
     healthcheck:
       timeout: 5s
@@ -43,7 +43,7 @@ services:
         "farm",
         "--node-rpc-url", "ws://node:9944",
         "--listen-on", "/ip4/0.0.0.0/tcp/30533",
-        "--reward-address", "st9VPsWXo8wgPpgRpJw7DejAcyvTPhhwF5BEeJ9kSKv7e3JZL",
+        "--reward-address", "st8ScpQ9h8SPTyXyFaiNgMfC1nTEPRPR9a1tdwJ1wo4qAdwWz",
         "path=/var/subspace,size=5T"
       ]
 volumes:

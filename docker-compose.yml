@@ -18,15 +18,17 @@ services:
     restart: unless-stopped
     command: [
       "--chain", "gemini-3f",
-      "--base-path", "/var/subspace",
-      "--execution", "wasm",
-      "--state-pruning", "archive",
-      "--port", "30333",
-      "--dsn-listen-on", "/ip4/0.0.0.0/tcp/30433",
-      "--rpc-cors", "all",
-      "--rpc-methods", "unsafe",
-      "--unsafe-ws-external",
-      "--validator",
+        "--base-path", "/var/subspace",
+        "--execution", "wasm",
+        "--blocks-pruning", "256",
+        "--state-pruning", "archive",
+        "--port", "30333",
+        "--dsn-listen-on", "/ip4/0.0.0.0/tcp/30433",
+        "--rpc-cors", "all",
+        "--rpc-methods", "unsafe",
+        "--rpc-external",
+        "--validator",
+        "--name", "subspace"
 # Replace `INSERT_YOUR_ID` with your node ID (will be shown in telemetry)
       "--name", ""
     ]

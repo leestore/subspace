@@ -1,0 +1,51 @@
+version: "3.7"
+services:
+  node:
+    image: ghcr.io/subspace/node:gemini-3f-2023-aug-31
+    volumes:
+      - node-data:/var/subspace:rw
+    ports:
+      - "0.0.0.0:30333:30333"
+      - "0.0.0.0:30433:30433"
+    restart: unless-stopped
+    command:
+      [
+        "--chain", "gemini-3f",
+        "--base-path", "/var/subspace",
+        "--execution", "wasm",
+        "--blocks-pruning", "256",
+        "--state-pruning", "archive",
+        "--port", "30333",
+        "--dsn-listen-on", "/ip4/0.0.0.0/tcp/30433",
+        "--rpc-cors", "all",
+        "--rpc-methods", "unsafe",
+        "--rpc-external",
+        "--validator",
+        "--name", "kanrublev"
+      ]
+    healthcheck:
+      timeout: 5s
+      interval: 30s
+      retries: 60
+
+  farmer:
+    depends_on:
+      node:
+        condition: service_healthy
+    image: ghcr.io/subspace/farmer:gemini-3f-2023-aug-31
+    volumes:
+      - farmer-data:/var/subspace:rw
+    ports:
+      - "0.0.0.0:30533:30533"
+    restart: unless-stopped
+    command:
+      [
+        "farm",
+        "--node-rpc-url", "ws://node:9944",
+        "--listen-on", "/ip4/0.0.0.0/tcp/30533",
+        "--reward-address", "st9VPsWXo8wgPpgRpJw7DejAcyvTPhhwF5BEeJ9kSKv7e3JZL",
+        "path=/var/subspace,size=5T"
+      ]
+volumes:
+  node-data:
+  farmer-data:            
